@@ -1,0 +1,83 @@
+image: node:7
+
+stages:
+  - test_n_build
+  - update_image
+  - deploy
+
+test_and_dist_prod:
+  stage: test_n_build
+  only:
+    - master
+  cache:
+   key: ${CI_BUILD_REF_NAME}
+   paths:
+     - node_modules/
+  script:
+    - npm install
+    - npm run test
+    - npm run deploy:prod
+  artifacts:
+    paths:
+     - dist/
+    expire_in: 10 mins
+
+test_and_dist_staging:
+  stage: test_n_build
+  only:
+    - staging
+  cache:
+   key: ${CI_BUILD_REF_NAME}
+   paths:
+     - node_modules/
+  script:
+    - npm install
+    - npm run test
+    - npm run deploy
+  artifacts:
+    paths:
+     - dist/
+    expire_in: 10 mins
+
+image_build_push_prod:
+  stage: update_image
+  only:
+    - master
+  image: docker:latest
+  services:
+  - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build -t registry.gitlab.com/todden-web/dashboard .
+    - docker push registry.gitlab.com/todden-web/dashboard
+
+image_build_push_staging:
+  stage: update_image
+  only:
+    - staging
+  image: docker:latest
+  services:
+  - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build -t registry.gitlab.com/todden-web/dashboard:staging .
+    - docker push registry.gitlab.com/todden-web/dashboard:staging
+
+
+
+
+deploy_to_rancher_prod:
+ stage: deploy
+ only:
+    - master
+ image: cdrx/rancher-gitlab-deploy
+ script:
+   - upgrade --stack Frontend --service dashboard --environment Todden-Production
+
+deploy_to_rancher_staging:
+ stage: deploy
+ only:
+    - staging
+ image: cdrx/rancher-gitlab-deploy
+ script:
+   - upgrade --stack Frontend --service dashboard --environment Todden-Staging

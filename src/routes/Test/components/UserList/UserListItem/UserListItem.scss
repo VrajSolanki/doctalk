@@ -1,0 +1,70 @@
+
+@import "~components/UIElements/sass/variables";
+@import "~components/UIElements/sass/mixins/typography";
+
+
+.row{
+  display: flex;
+  border-bottom: solid 1px $chalk;
+  align-items: center;
+  height: 100px;
+  flex-shrink: 0;
+  cursor: pointer;
+  &:hover{
+    & .moreSvgIcon{
+      fill: black;
+    }
+  }
+}
+
+.cell{
+  display: flex;
+  color: $pencil;
+  font-family:'AvenirNext-Medium';
+  font-size: 14px;
+  font-weight: 500;
+}
+.emptyCell{
+    composes: cell;
+    flex-basis: 6%;
+}
+
+.profileCell{
+  composes: cell;
+  min-width: 48px;
+  flex-basis: 8%;
+  justify-content: left;
+}
+
+.profileImage{
+  align-self: center;
+  height: 24px;
+  width: 24px;
+  background-position: center;
+  background-size: cover;
+  border-radius: 12px;
+  border: 1px solid #f0f0f3;
+}
+
+.nameCell{
+  composes: cell;
+  flex-basis: 17%;
+}
+
+.scoreCell{
+  composes: cell;
+  flex-basis: 20%;
+  justify-content: left;
+}
+
+.userInfoCell{
+  composes: cell;
+  flex-basis: 24%;
+  justify-content: left;
+}
+
+.profileItemCell{
+  composes: cell;
+  flex-basis: 24%;
+  justify-content: left;
+}

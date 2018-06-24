@@ -1,0 +1,25 @@
+
+@import "~components/UIElements/sass/variables";
+@import "~components/UIElements/sass/mixins/typography";
+
+
+
+.container
+{
+  display: flex;
+  width: '100%'
+}
+
+.content{
+  display: flex;
+}
+
+.moreText{
+    display: flex;
+    color: #007aff;
+  }
+
+  .moreToolTipItem
+  {
+    display: flex;
+  }
