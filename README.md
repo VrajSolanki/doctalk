@@ -9,7 +9,7 @@ npm install
 npm run dev
 
 To access the directory path:    
--- http://localhost:3001/test   
+-- http://localhost:3000/test   
   
 Project structure  
 
