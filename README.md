@@ -26,7 +26,7 @@ src
 - components  
 -- common symantic based components
 - routes  
- -- directory    
+ -- test    
  
 
  each route has  
