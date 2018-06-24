@@ -39,19 +39,21 @@ export const getUsersBasedonFollowers = () => {
   return (dispatch, getState) => {
     return new Promise( resolve => {
       const searchTerm = getState().test.searchTerm;
-      dispatch(updateIsLoading(true));
-      request
-        .get(`${SERVER_URL}?q=${searchTerm}+in%3Afullname&type=Users+followers:%3E0`)
-        .end(function(err, res){
-          if(!err){
-            dispatch(fetchUserSuccess(res.body.items));
-            dispatch(updateIsLoading(false));
-            resolve();
-          }
-          else{
-            dispatch(updateIsLoading(false));
-          }
-        });
+      if(!!searchTerm){
+        dispatch(updateIsLoading(true));
+        request
+          .get(`${SERVER_URL}?q=${searchTerm}+in%3Afullname&type=Users+followers:%3E0`)
+          .end(function(err, res){
+            if(!err){
+              dispatch(fetchUserSuccess(res.body.items));
+              dispatch(updateIsLoading(false));
+              resolve();
+            }
+            else{
+              dispatch(updateIsLoading(false));
+            }
+          });
+      }
     })
   }
 };

@@ -11,7 +11,7 @@ export default class Test extends Component {
     super(props);
 
     this.state = {
-      searchText: ""
+      searchText: "vraj"
     };
 
     this.onUpdateSearchText = _.debounce(
@@ -45,7 +45,7 @@ export default class Test extends Component {
             searchTerm={this.state.searchText}
             changeSearchTerm={this.changeSearchTerm}/>
         </div>
-        <UserList userFeed={userFeed} />
+        {!!this.state.searchText &&<UserList userFeed={userFeed} />}
       </div>
     )
   }
